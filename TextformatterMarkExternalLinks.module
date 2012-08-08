@@ -17,9 +17,8 @@ class TextformatterMarkExternalLinks extends Textformatter {
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Mark External Links', 
-			'version' => 101, 
-			'summary' => "Add's a class='external' and a rel='nofollow' to every external link.", 
-			'url' => "http://p.stadtpirat.net/processwire/external", 
+			'version' => 102, 
+			'summary' => "Adds a class='external' and a rel='nofollow' to every external link."
 		); 
 	}
 
