@@ -38,7 +38,7 @@ class TextformatterMarkExternalLinks extends Textformatter {
 	    } elseif(strpos($tag, $blog_url)) {
 	    	 return $original;
 	    } else {
-	        return "<$tag rel='nofollow' class='external'>";
+	        return "<$tag rel='nofollow noreferrer noopener' class='external'>";
 	    }
 	}
 
