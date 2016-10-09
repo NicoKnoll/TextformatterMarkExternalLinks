@@ -17,7 +17,7 @@ class TextformatterMarkExternalLinks extends Textformatter {
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Mark External Links', 
-			'version' => 102, 
+			'version' => 103, 
 			'summary' => "Adds a class='external' and a rel='nofollow' to every external link."
 		); 
 	}
@@ -28,19 +28,15 @@ class TextformatterMarkExternalLinks extends Textformatter {
 	
 	function mark_external($match) { 
 	    list($original, $tag) = $match;  
-
-	    $blog_url = 'http://'.$this->config->httpHost.$this->config->urls->root;
-	
-	    if(strpos($tag, "nofollow")) {
+	    if(preg_match('%\srel=(\'|")?[^\1]*nofollow(\s|\1|$)%i', $tag)) {
 	        return $original;
-	    } elseif(!strpos($tag, 'http')) {
-	    	 return $original;
-	    } elseif(strpos($tag, $blog_url)) {
-	    	 return $original;
-	    } else {
-	        return "<$tag rel='nofollow' class='external'>";
 	    }
+	    $host = preg_quote($this->config->httpHost, "%");
+	    $root = $this->config->urls->root ? preg_quote(rtrim($this->config->urls->root ,"/"), "%") : "";
+	    if(preg_match('%\shref=(\'|")?(?:[\.]+|(?:https?:)?//'.$host.$root.'|(?!//)'.$root.')(?:/|\1|\?|#|\s|$)%is', $tag)) {
+	        return $original;
+	    }
+	    return "<$tag rel='nofollow' class='external'>";
 	}
 
 }
-?>
